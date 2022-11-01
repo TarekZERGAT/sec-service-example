@@ -10,15 +10,25 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.ArrayList;
 
 @SpringBootApplication
+//@EnableGlobalMethodSecurity(prePostEnabled = true,securedEnabled = true)
 public class SecServiceExampleApplication{
 
     public static void main(String[] args) {
         SpringApplication.run(SecServiceExampleApplication.class, args);
     }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
     @Bean
     CommandLineRunner start(AccountService accountService){
         System.out.println("Command runner");
@@ -43,7 +53,7 @@ public class SecServiceExampleApplication{
             accountService.addRoleToUser("user3","USER");
             accountService.addRoleToUser("user3","PRODUCT_MANAGER");
             accountService.addRoleToUser("user4","USER");
-            accountService.addRoleToUser("user2","BILLS_MANGER");
+            accountService.addRoleToUser("user4","BILLS_MANAGER");
         };
     }
 }
